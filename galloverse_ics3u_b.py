@@ -216,6 +216,41 @@ bomb_y_henry = 70
 bomb_stopped_henry = False
 # -----------------------------------
 
+WIDTH = 640
+HEIGHT = 480
+SIZE = (WIDTH, HEIGHT)
+
+screen = pygame.display.set_mode(SIZE)
+clock = pygame.time.Clock()
+
+
+triangle_x_badmus = WIDTH // 2
+triangle_y_badmus = HEIGHT // 2
+eye_x_badmus = WIDTH // 2
+eye_y_badmus = HEIGHT // 2
+small_circle_x_badmus = eye_x_badmus
+small_circle_y_badmus = eye_y_badmus
+
+blink_timer = 0  
+is_eye_open = True  
+
+night_background_color = (0, 0, 20)  
+green_grass_color = (0, 128, 0)  
+
+
+eyelashes = [
+    (eye_x_badmus - 10, eye_y_badmus - 25, eye_x_badmus - 30, eye_y_badmus - 10),
+    (eye_x_badmus - 5, eye_y_badmus - 30, eye_x_badmus - 20, eye_y_badmus - 40),
+    (eye_x_badmus + 5, eye_y_badmus - 30, eye_x_badmus + 20, eye_y_badmus - 40),
+    (eye_x_badmus + 10, eye_y_badmus - 25, eye_x_badmus + 30, eye_y_badmus - 10),
+]
+
+
+font = pygame.font.Font(None, 48)  # You can choose the font and size you prefer
+text = font.render("Illuminati", True, (255, 215, 0))  # Gold color
+
+# -----------------------------------
+
 
 running = True
 while running:
@@ -262,8 +297,8 @@ while running:
                 daniel_blink = True
                 daniel_blink_close = True
                 daniel_action_selection = False
-    
-    
+
+
 
     # DRAWING
     x = 3 * 640
@@ -291,7 +326,7 @@ while running:
                y + daniel_pupil_y, 
                 daniel_pupil_radius, 
                 daniel_pupil_radius))
-    
+
     elif daniel_stare is True:
         pygame.draw.ellipse(screen, (0, 0, 0), (x + daniel_pupil_x, 
                                                y + daniel_pupil_y, 
@@ -474,7 +509,7 @@ while running:
     text2 = font.render('Fire = SPACE | Reset = R | Detonate = B', True, (0, 0, 0))
     screen.blit(text, (x, y))
     screen.blit(text2, (x, y + 35))
-    
+
     # -----------
     x = 1280
     y = 960
@@ -536,18 +571,18 @@ while running:
     # Code for the inner parts of moon
     pygame.draw.circle(screen, (60, 60, 60), (x + inner_moon_x_hayden, y + inner_moon_y_hayden), 30)
     pygame.draw.circle(screen, (60, 60, 60), (x + inner_moon_x_hayden2, y + inner_moon_y_hayden2), 18)
-    
+
     # Code for building in back
     pygame.draw.rect(screen, (40, 40, 40), (x + 450, y + 130, 130, 320))
     pygame.draw.rect(screen, (40, 40, 40), (x + 40, y + 150, 130, 320))
-    
-    
+
+
     # Code for buildings in front
     pygame.draw.rect(screen, (20, 20, 20), (x + 480, y + 280, 70, 150))
     pygame.draw.rect(screen, (20, 20, 20), (x + 560, y + 270, 70, 150))
     pygame.draw.rect(screen, (20, 20, 20), (x + 80, y + 280, 70, 150))
     pygame.draw.rect(screen, (20, 20, 20), (x + 0 , y + 270, 70, 150))
-    
+
     # Code for person
     pygame.draw.circle(screen, (0, 0, 0), (x + 320, y + 300), 30)
     pygame.draw.rect(screen, (0, 0, 0), (x + 300, y + 325, 40, 75))
@@ -565,7 +600,7 @@ while running:
     height = 480
     pygame.draw.rect(screen, (0, 0, 255), (x, y, width, height))
     initial_bomb_x = x -  1900
-    
+
     if not car_go_back:
         car_lucas_x += 4
         if car_lucas_x >= 400:
@@ -575,7 +610,7 @@ while running:
         car_go_back = True
         if car_lucas_x <= 0:
             car_go_back = False
-    
+
     if sun_lucas_x <= 444:
         sun_lucas_x += 4
         sun_lucas_y -= 2
@@ -621,7 +656,7 @@ while running:
     moon_x_anthony -= 2
     sun_x_anthony -= 4
     rock_x_anthony -= 6
-    
+
     # Background
     pygame.draw.rect(screen, (8, 23, 54), (x, y, width, height))
 
@@ -630,7 +665,7 @@ while running:
         x_star_anthony = random.randrange(1, 640)
         y_star_anthony = random.randrange(1, 480)
         pygame.draw.circle(screen, (225, 225, 225), (x + x_star_anthony, y + y_star_anthony), 1)
- 
+
     # Planet Code
     pygame.draw.circle(screen, (217, 106, 28), (x + sun_x_anthony, y + sun_y_anthony), 60)
     pygame.draw.circle(screen, (219, 167, 44), ((x + sun_x_anthony), y + sun_y_anthony), 55)
@@ -645,20 +680,20 @@ while running:
     if moon_x_anthony < 40:
         moon_x_anthony = 600
         moon_y_anthony = random.randrange(30, 451)
-    
+
     pygame.draw.polygon(screen, (225, 0, 0), ((x + rock_x_anthony + 2, y + rock_y_anthony - 12), (x + rock_x_anthony + 2, y + rock_y_anthony + 12), (x + rock_x_anthony + 40, y + rock_y_anthony)))
     pygame.draw.circle(screen, (56, 56, 56), (x + rock_x_anthony, y + rock_y_anthony), 15)
     if rock_x_anthony < 20:
         rock_x_anthony = 600
         rock_y_anthony = random.randrange(20, 451)
-    
+
     # # Spaceship Code
     while y_engine_anthony < (30 * number_of_engines_anthony):
         pygame.draw.ellipse(screen, (217, 215, 215), (x + ((width / 2) - 125),y + (((height / 2)+ y_engine_anthony) - 5), 100, 50))
         y_engine_anthony += 30
-        
+
     pygame.draw.ellipse(screen, (225, 225, 225), (x + ((320) - 125),y + (height / 2), 350, 100))
-    
+
     while count_anthony <= (28 * number_of_windows_anthony):
         pygame.draw.circle(screen, (0, 0, 0), ((x + x_window_anthony),(y + y_window_anthony)), 8)
         x_window_anthony += 20
@@ -729,13 +764,13 @@ while running:
     elif circle_x_tren <= x + 50:
         direction_x = 10
     circle_x_tren += direction_x    
-    
+
     stick_spawn = random.randrange(0, 640)
     horizontal_stick_spawn = random.randrange(0, 480)   
-    
-    
+
+
     pygame.draw.rect(screen, (0, 0, 0), (x, y, 640, 480))
-    
+
     pygame.draw.circle(screen, (255, 255, 0), (x + circle_x_tren - 400, y + circle_y_tren), 35)
     pygame.draw.rect(screen, (0, 0, 0), (x + circle_x_tren - 422, y + circle_y_tren + 3, 27, 39))
     pygame.draw.rect(screen, (255, 0, 80), (x + circle_x_tren - 420, y + circle_y_tren + 5, 23, 35))
@@ -755,19 +790,19 @@ while running:
     y = 480*3
     width = 640
     height = 480
-    
+
     #BACKGROUND
     pygame.draw.rect(screen, (AYDA_SKY), (x, y, width, height))
-        
+
     #LAND
     pygame.draw.ellipse(screen, AYDA_BROWN, (x + width // 4, y + height // 4, 300, 300), width=0)
-    
+
     #SHREKI-WAN KENOBI
     pygame.draw.ellipse(screen, AYDA_GREEN, (x + width//2 - 30, y + height//2-140, 30, 40), width=0)
     xpoint = x + width//2-15
     pygame.draw.line(screen, AYDA_GREEN, (xpoint+15, y + height//2-140), (xpoint, y + height//2-120), width=3)
     pygame.draw.line(screen, AYDA_GREEN, (xpoint-15, y + height//2-140), (xpoint, y + height//2-120), width=3)
-    
+
     #LIGHTSABER
     x1, y1 = x + width // 2 - 20, y + height // 2 - 120
     x2, y2 = x + width // 2 - 45, y + height // 2 - 140
@@ -775,7 +810,7 @@ while running:
     saber_y2 = y1 + (y2 - y1) / 4
     pygame.draw.line(screen, (AYDA_BLUE), (x1, y1), (x2, y2), width=3) #the laser
     pygame.draw.line(screen, (0, 0, 0), (x1, y1), (saber_x2, saber_y2), width=3) #the handle
-    
+
     #WAVE
     wave_points = []
     for a in range(x, x + width, 5): 
@@ -783,13 +818,13 @@ while running:
         y_wave = height // 2 + ayda_amplitude * math.sin(ayda_frequency * x_wave + ayda_phase)
         wave_points.append((x_wave + x, y_wave + y))
         pygame.draw.rect(screen, AYDA_LAVA, (x_wave + x, y_wave + y, 5, 5))
-    
+
     wave_points.append((x + width, y + height))
     wave_points.append((x, y + height))
     pygame.draw.polygon(screen, AYDA_LAVA, wave_points)
-    
+
     ayda_phase += 0.1
-    
+
     #TEXT
     screen.blit(ayda_text, (x+width//2 - ayda_text.get_width()//2, y+20))
 
@@ -840,11 +875,48 @@ while running:
         x_henry = 0
         bomb_stopped_henry = False
     # ---------------------------------------------------------------------------
-    
+    screen.fill(night_background_color)
+    x = width*5
+    y = height*1   
+    width = 640
+    height = 480
+
+
+    pygame.draw.rect(screen, green_grass_color, (0, HEIGHT // 2, WIDTH, HEIGHT // 2))
+
+    # Draw the triangle (Illuminati symbol)
+    triangle_points = [
+        (triangle_x_badmus + x, triangle_y_badmus - 50 - y),
+        (triangle_x_badmus - 50 - x, triangle_y_badmus + 50 + y),
+        (triangle_x_badmus + 50 + x, triangle_y_badmus + 50 + y)]
+
+    pygame.draw.polygon(screen, (255, 215, 0), triangle_points)  
+
+    # Control eye blinking
+    blink_timer += 1
+    if blink_timer >= 30:
+        is_eye_open = not is_eye_open
+        blink_timer = 0
+
+    # Draw the eye blinking
+    if is_eye_open:
+        pygame.draw.circle(screen, (255, 255, 255), (eye_x_badmus + x, eye_y_badmus + y), 20)  # White eye
+    else:
+        pygame.draw.circle(screen, (0, 0, 0), (eye_x_badmus + x, eye_y_badmus + y), 20)  # Closed eye
+
+    # Draw a smaller black circle inside the big circle
+    pygame.draw.circle(screen, (0, 0, 0), (small_circle_x_badmus + x, small_circle_y_badmus + y), 10)
+
+    # Draw the eyelashes
+    for eyelash in eyelashes:
+        pygame.draw.line(screen, (0, 0, 0), eyelash[0:2], eyelash[2:4], 2)
+
+    # Write Illuminati text above the triangle
+    screen.blit(text, (WIDTH // 2 - text.get_width() // 2, triangle_y_badmus - 100))
     # ----------------------------------------------------------------------------------------
 
 
-    
+
     # Must have these coordinates
     x = 1920
     y = 1440
@@ -853,7 +925,7 @@ while running:
 
     frames_gallo += 1
     text_scale_gallo = abs((math.sin(frames_gallo / 30) - 3) / 3)
-    
+
 
     # Rather than screen.fill, draw a rectangle
     screen.blit(bg_gallo, (x, y))
@@ -875,3 +947,6 @@ while running:
 
 
 pygame.quit()
+
+
+ 
