@@ -224,6 +224,26 @@ bomb_x_henry = 262
 bomb_y_henry = 70
 bomb_stopped_henry = False
 # -----------------------------------
+x=3200
+y=480
+triangle_x_badmus = x + 320
+triangle_y_badmus =y + 150
+eye_x_badmus = x + 320
+eye_y_badmus = y + 150
+small_circle_x_badmus = eye_x_badmus
+small_circle_y_badmus = eye_y_badmus
+
+blink_timer = 0  
+is_eye_open = True  
+
+day_background_color = (135, 206, 235)  
+green_grass_color = (23, 255, 100)  
+
+font = pygame.font.Font(None, 45)
+illuminati_text = font.render("Illuminati", True, (255, 215, 0))  # Gold color
+text_rect = illuminati_text.get_rect()
+# -----------------------------------
+
 
 
 
@@ -1002,7 +1022,73 @@ while running:
         if curd[1] > 325:  
             curd[1] = random.randint(-100, -10)
             curd[0] = random.randint(x + 155, x + 449)
+            
     # ----------------------------------------------------------------------------------------
+    x = 640*5
+    y = 480*1
+    width = 640
+    height = 480
+    eyelashes = [(eye_x_badmus - 10 , eye_y_badmus - 25, eye_x_badmus - 30 , eye_y_badmus - 10),
+      (eye_x_badmus - 5, eye_y_badmus - 30 , eye_x_badmus - 20 , eye_y_badmus - 40),
+      (eye_x_badmus + 5 , eye_y_badmus - 30 , eye_x_badmus + 20 , eye_y_badmus - 40),
+      (eye_x_badmus + 10 , eye_y_badmus - 25 , eye_x_badmus + 30 , eye_y_badmus - 10 ),
+      ]
+
+
+
+    # Draw the grass
+    pygame.draw.rect(screen, green_grass_color, (x, y+240, width, height // 2))
+    # Draw the grass
+    pygame.draw.rect(screen, day_background_color, (x, y, width, height // 2))
+    
+    # Draw the triangle (Illuminati symbol)
+    #triangle_points = [(triangle_x_badmus , triangle_y_badmus - 50 ), (triangle_x_badmus - 50 , triangle_y_badmus + 50 ), (triangle_x_badmus + 50 , triangle_y_badmus + 50)]
+    triangle_points = [(x+320 , y+70 ), (x + 270, y+ 190 ), (x + 370, y + 190)]
+
+    pygame.draw.polygon(screen, (255, 215, 0), triangle_points)  # Gold color
+
+    # Control eye blinking
+    blink_timer += 1
+    if blink_timer >= 30:
+        is_eye_open = not is_eye_open
+        blink_timer = 0
+
+    # Draw the eye blinking
+    if is_eye_open:
+        pygame.draw.circle(screen, (255, 255, 255), (eye_x_badmus, eye_y_badmus ), 20)  # White eye
+        # Draw a smaller black circle inside the big circle
+        pygame.draw.circle(screen, (0, 0, 0), (small_circle_x_badmus, small_circle_y_badmus ), 10)
+    else:
+        pygame.draw.circle(screen, (255, 215, 0), (eye_x_badmus, eye_y_badmus ), 20)  # Closed eye
+
+    
+    
+
+    # Draw the eyelashes
+    for eyelash in eyelashes:
+        pygame.draw.line(screen, (0, 0, 0), eyelash[0:2], eyelash[2:4], 2)
+
+    #Draw the legs
+    pygame.draw.rect(screen, (0, 0, 0), (eye_x_badmus-25, eye_y_badmus+40 , 10, 50, ))
+    pygame.draw.rect(screen, (0, 0, 0), (eye_x_badmus+20, eye_y_badmus+40 , 10, 50 ))
+  
+
+    # Write Illuminati text above the triangle
+    #screen.blit(text, (WIDTH // 2 - text.get_width() // 2, triangle_y_badmus - 100))
+    text_rect.center = (triangle_x_badmus, triangle_y_badmus - 100)
+    screen.blit(illuminati_text, text_rect)
+    houses_badmus = x
+    house_x=x # Draw the sun
+    while houses_badmus <= x+240:
+      pygame.draw.rect(screen, ( 188, 74, 60), (house_x, y+100, 200, 140))  # Main house (Brick)
+      pygame.draw.polygon(screen, (139, 69, 19), [(house_x, y+100), (house_x + 100, y), (house_x + 200, y+100)])  # Roof (Brown)
+      pygame.draw.rect(screen, (255, 255,255 ), (house_x + 50, y + 140, 30, 100))  # Door (white)
+      pygame.draw.circle(screen, (255, 215, 0), (house_x + 60, y + 190), 5)  # Door knob (Brown)
+      house_x += 440
+      houses_badmus += 240
+    # ----------------------------------------------------------------------------------------
+  
+    
     x = 1920
     y = 1440
     width = 640
